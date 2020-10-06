@@ -19,10 +19,11 @@
 
 import collections
 import gzip
-import os
+import os, fnmatch
 import tarfile
 import tempfile
 from urllib import request
+import matplotlib.image as mpimg 
 
 import numpy as np
 import scipy.io
@@ -30,7 +31,7 @@ import tensorflow as tf
 from absl import app
 from tqdm import trange
 
-from examples.classify.semi_supervised.img.libml.data import core
+from libml.data import core
 from objax.util import EasyDict
 from objax.util.image import to_png
 
@@ -116,6 +117,56 @@ def _load_cifar10():
     test_set['images'] = _encode_png(unflatten(test_set['images']))
     return dict(train=train_set, test=test_set)
 
+def _load_voets():
+
+    DIR = "/Users/jmarrietar/Dropbox/11_Semestre/Maestria/code/data/"
+    #DIR = "/Volumes/APOLLOM110/server/jama16-retina-replication-master/data/eyepacs"
+    TRAIN_DIR = os.path.join(DIR, "train")
+    TEST_DIR = os.path.join(DIR, "test")
+
+    # Train dataset
+    train_0_imgs = [
+        os.path.join(TRAIN_DIR, "0", x)
+        for x in fnmatch.filter(os.listdir(os.path.join(TRAIN_DIR, "0")), "*.jpg")
+    ]
+    train_1_imgs = [
+        os.path.join(TRAIN_DIR, "1", x)
+        for x in fnmatch.filter(os.listdir(os.path.join(TRAIN_DIR, "1")), "*.jpg")
+    ]
+    train_imgs = train_0_imgs + train_1_imgs
+
+    train_set = {}
+    train_set["images"] = np.array(
+        [np.array(mpimg.imread(fname)) for fname in train_imgs]
+    )
+    train_set["labels"] = np.array(
+        list(np.zeros(len(train_0_imgs), dtype=np.int8))
+        + list(np.ones(len(train_1_imgs), dtype=np.int8))
+    )
+
+    # Test dataset
+    test_0_imgs = [
+        os.path.join(TEST_DIR, "0", x)
+        for x in fnmatch.filter(os.listdir(os.path.join(TEST_DIR, "0")), "*.jpg")
+    ]
+    test_1_imgs = [
+        os.path.join(TEST_DIR, "1", x)
+        for x in fnmatch.filter(os.listdir(os.path.join(TEST_DIR, "1")), "*.jpg")
+    ]
+    test_imgs = test_0_imgs + test_1_imgs
+
+    test_set = {}
+    test_set["images"] = np.array(
+        [np.array(mpimg.imread(fname)) for fname in test_imgs]
+    )
+    test_set["labels"] = np.array(
+        list(np.zeros(len(test_0_imgs), dtype=np.int8))
+        + list(np.ones(len(test_1_imgs), dtype=np.int8))
+    )
+
+    train_set["images"] = _encode_png(train_set["images"])
+    test_set["images"] = _encode_png(test_set["images"])
+    return dict(train=train_set, test=test_set)
 
 def _load_cifar100():
     def unflatten(images):
@@ -235,11 +286,12 @@ def _is_installed_folder(name, folder):
 
 
 CONFIGS = {
-    'cifar10': dict(loader=_load_cifar10, checksums=dict(train=None, test=None)),
-    'cifar100': dict(loader=_load_cifar100, checksums=dict(train=None, test=None)),
-    'svhn': dict(loader=_load_svhn, checksums=dict(train=None, test=None, extra=None)),
-    'stl10': dict(loader=_load_stl10, checksums=dict(train=None, test=None)),
-    'mnist': dict(loader=_load_mnist, checksums=dict(train=None, test=None)),
+    #'cifar10': dict(loader=_load_cifar10, checksums=dict(train=None, test=None)),
+    'voets': dict(loader=_load_voets, checksums=dict(train=None, test=None)),
+    #'cifar100': dict(loader=_load_cifar100, checksums=dict(train=None, test=None)),
+    #'svhn': dict(loader=_load_svhn, checksums=dict(train=None, test=None, extra=None)),
+    #'stl10': dict(loader=_load_stl10, checksums=dict(train=None, test=None)),
+    #'mnist': dict(loader=_load_mnist, checksums=dict(train=None, test=None)),
 }
 
 
