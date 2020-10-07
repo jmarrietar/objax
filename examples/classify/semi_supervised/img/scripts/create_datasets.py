@@ -120,7 +120,7 @@ def _load_cifar10():
 
 def _load_voets():
 
-    IMG_SIZE = 150
+    IMG_SIZE = 100
 
     DIR = "/Users/jmarrietar/Dropbox/11_Semestre/Maestria/code/data/"
     #DIR = "/Volumes/APOLLOM110/server/jama16-retina-replication-master/data/eyepacs"

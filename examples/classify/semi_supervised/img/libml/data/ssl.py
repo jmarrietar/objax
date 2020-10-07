@@ -60,7 +60,7 @@ def create_datasets():
     d.update([DataSetsUnlabeled.creator('mnist', ['mnist-train.tfrecord'], cache=True,
                                         parse_fn=core.record_parse_mnist)])
     d.update([DataSetsUnlabeled.creator('cifar10', ['cifar10-train.tfrecord'], cache=True)])
-    d.update([DataSetsUnlabeled.creator('voets', ['voets-train.tfrecord'], height=150, width=150)])
+    d.update([DataSetsUnlabeled.creator('voets', ['voets-train.tfrecord'], height=100, width=100)])
     d.update([DataSetsUnlabeled.creator('cifar100', ['cifar100-train.tfrecord'], cache=True)])
     d.update([DataSetsUnlabeled.creator('svhn', ['SSL/svhn-unlabel.tfrecord'])])
     d.update([DataSetsUnlabeled.creator('svhnx', ['SSL/svhnx-unlabel.tfrecord'])])
