@@ -24,7 +24,8 @@ import tarfile
 import tempfile
 from urllib import request
 import matplotlib.image as mpimg 
-
+import matplotlib.pyplot as plt
+from PIL import Image
 import numpy as np
 import scipy.io
 import tensorflow as tf
@@ -119,6 +120,8 @@ def _load_cifar10():
 
 def _load_voets():
 
+    IMG_SIZE = 32
+    
     DIR = "/Users/jmarrietar/Dropbox/11_Semestre/Maestria/code/data/"
     #DIR = "/Volumes/APOLLOM110/server/jama16-retina-replication-master/data/eyepacs"
     TRAIN_DIR = os.path.join(DIR, "train")
@@ -136,9 +139,10 @@ def _load_voets():
     train_imgs = train_0_imgs + train_1_imgs
 
     train_set = {}
-    train_set["images"] = np.array(
-        [np.array(mpimg.imread(fname)) for fname in train_imgs]
-    )
+    
+    
+    train_set["images"] = np.array([np.array(Image.open(fname).resize((IMG_SIZE, IMG_SIZE))) for fname in train_imgs])
+     
     train_set["labels"] = np.array(
         list(np.zeros(len(train_0_imgs), dtype=np.int8))
         + list(np.ones(len(train_1_imgs), dtype=np.int8))
@@ -156,9 +160,8 @@ def _load_voets():
     test_imgs = test_0_imgs + test_1_imgs
 
     test_set = {}
-    test_set["images"] = np.array(
-        [np.array(mpimg.imread(fname)) for fname in test_imgs]
-    )
+    test_set["images"] = np.array([np.array(Image.open(fname).resize((IMG_SIZE, IMG_SIZE))) for fname in test_imgs])
+
     test_set["labels"] = np.array(
         list(np.zeros(len(test_0_imgs), dtype=np.int8))
         + list(np.ones(len(test_1_imgs), dtype=np.int8))

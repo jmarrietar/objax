@@ -97,7 +97,7 @@ def create_datasets(samples_per_class=(1, 2, 3, 4, 5, 10, 25, 100, 400)):
                                       {'cifar10': ['cifar10-test.tfrecord']}, valid, cache=True)
               for valid, seed, sz in itertools.product([0, 5000], range(6), 10 * samples_per_class)])
     d.update([DataSetsLabeled.creator('voets.%d@%d' % (seed, sz), ['SSL/voets.%d@%d-label.tfrecord' % (seed, sz)],
-                                      {'voets': ['voets-test.tfrecord']}, valid, height=299, width=299)
+                                      {'voets': ['voets-test.tfrecord']}, valid, height=32, width=32)
               for valid, seed, sz in itertools.product([0, 5000], range(6), 10 * samples_per_class)])
     d.update([DataSetsLabeled.creator('cifar100.%d@%d' % (seed, sz), ['SSL/cifar100.%d@%d-label.tfrecord' % (seed, sz)],
                                       {'cifar100': ['cifar100-test.tfrecord']}, valid, nclass=100)
