@@ -121,7 +121,7 @@ if __name__ == '__main__':
     flags.DEFINE_float('lr', 0.03, 'Learning rate.')
     flags.DEFINE_float('wd', 0.0005, 'Weight decay.')
     flags.DEFINE_float('wu', 1, 'Pseudo label loss weight.')
-    flags.DEFINE_integer('batch', 64, 'Batch size')
+    flags.DEFINE_integer('batch', 16, 'Batch size')
     flags.DEFINE_integer('uratio', 5, 'Unlabeled batch size ratio')
     flags.DEFINE_integer('filters', 32, 'Initial filter size of convolutions.')
     flags.DEFINE_integer('filters_max', 512, 'Max filter size for convolutions.')
