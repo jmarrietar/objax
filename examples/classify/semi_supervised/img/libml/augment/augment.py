@@ -22,9 +22,9 @@ import tensorflow as tf
 from absl import flags
 
 import objax
-from examples.classify.semi_supervised.img.libml.augment import ctaugment
-from examples.classify.semi_supervised.img.libml.augment.core import get_tf_augment
-from examples.classify.semi_supervised.img.libml.data import core
+from libml.augment import ctaugment
+from libml.augment.core import get_tf_augment
+from libml.data import core
 
 FLAGS = flags.FLAGS
 

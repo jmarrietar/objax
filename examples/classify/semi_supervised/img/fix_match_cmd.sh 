@@ -33,7 +33,7 @@ export size=4000
 export ML_DATA="data"
 export PROJECT="ObjaxSSL"
 export seed=3
-export size=4
+export size=10
 
 ./scripts/create_datasets.py
 
@@ -42,6 +42,6 @@ export size=4
 ./scripts/create_split.py --seed=$seed --size=$size $ML_DATA/$PROJECT/SSL/voets $ML_DATA/$PROJECT/voets-train.tfrecord
 
 
-python fixmatch.py --dataset=voets.3@4-0 --unlabeled=voets --uratio=5 --augment='CTA(sm,sm,sm)'
+python fixmatch.py --dataset=voets.3@10-0 --unlabeled=voets --uratio=5 --augment='CTA(sm,sm,sm)'
 
 
